@@ -1,54 +1,25 @@
-# React + TypeScript + Vite
+### Доступные ручки
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+-   **GET /report**
 
-Currently, two official plugins are available:
+    -   Генерирует CSV отчет с заданными параметрами.
+    -   Параметры запроса:
+        -   `size` (number, обязателен): Размер отчета в ГБ
+        -   `withErrors` (string, по умолчанию "off"): Включать ли ошибки в отчет
+        -   `maxSpend` (string, по умолчанию "1000"): Максимальная сумма расходов
+    -   Ответ: CSV файл с отчетом или объект с ошибкой
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   **POST /aggregate**
+    -   Агрегирует данные, полученные в виде файла (multipart/form-data).
+    -   Параметры запроса:
+        -   `rows` (number, обязателен): Количество строк для промежуточного агрегирования
+    -   Тело запроса: multipart/form-data с файлом
+    -   Ответ: JSON-стрим с результатами агрегации или объект с ошибкой
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Документация API (Swagger)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Интерактивная документация доступна по адресу: [http://localhost:3000/swagger](http://localhost:3000/swagger)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+В ней можно посмотреть описание ручек, параметры и протестировать запросы прямо из браузера.
