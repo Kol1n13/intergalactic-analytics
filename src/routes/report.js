@@ -82,6 +82,6 @@ export const reportRoute = async (fastify) => {
           reply.status(500).send({ error: "Внутренняя ошибка сервера" });
         }
       }
-    }
+    },
   );
 };

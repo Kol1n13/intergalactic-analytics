@@ -1,1 +1,1 @@
-export type CivType = "humans" | "monsters" | "blobs"
+export type CivType = "humans" | "monsters" | "blobs";

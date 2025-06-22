@@ -1,1 +1,1 @@
-export type LoadType = 'isLoading' | 'notLoaded' | 'loaded'
+export type LoadType = "isLoading" | "notLoaded" | "loaded";

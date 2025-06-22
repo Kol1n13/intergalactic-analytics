@@ -1,5 +1,5 @@
-import { use, useRef, useState } from "react";
-import styles from "./uploadForm.module.css"
+import { useRef, useState } from "react";
+import styles from "./uploadForm.module.css";
 import { useStore } from "../../store/store";
 import { analizeFile } from "../../api/analize-file";
 import { Loader } from "../Loader/Loader";
@@ -12,9 +12,9 @@ export function UploadForm() {
   const setFile = useStore((state) => state.setFile);
   const error = useStore((state) => state.analyticError);
   const setError = useStore((state) => state.setAnalyticError);
-  const updateLoading = useStore((state) => state.updateAnalyticLoading)
-  const updateCurrData = useStore((state) => state.updateCurrData)
-  const loadingStatus = useStore((state)=> state.analyticLoading)
+  const updateLoading = useStore((state) => state.updateAnalyticLoading);
+  const updateCurrData = useStore((state) => state.updateCurrData);
+  const loadingStatus = useStore((state) => state.analyticLoading);
 
   const isCSV = (f: File) =>
     f.type === "text/csv" || f.name.toLowerCase().endsWith(".csv");
@@ -30,15 +30,13 @@ export function UploadForm() {
     e.preventDefault();
     setIsDragging(false);
     const droppedFile = e.dataTransfer.files?.[0];
-    if (droppedFile) 
-        validateAndSetFile(droppedFile);
+    if (droppedFile) validateAndSetFile(droppedFile);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     e.target.value = "";
-    if (selectedFile) 
-        validateAndSetFile(selectedFile);
+    if (selectedFile) validateAndSetFile(selectedFile);
   };
 
   const validateAndSetFile = (f: File) => {
@@ -55,32 +53,64 @@ export function UploadForm() {
     e.preventDefault();
     if (!file || error) return;
     await analizeFile(file)
-    .then((partedData) => {
+      .then((partedData) => {
         const storedStats = localStorage.getItem("aggregated_statistics");
-        if (storedStats)
-        {
-            const pasredStats = JSON.parse(storedStats);
-            pasredStats.push({"fileName" : file.name, "date" : new Date(), "isProccessed" : true, 'data' : partedData});
-            localStorage.setItem("aggregated_statistics", JSON.stringify(pasredStats));
+        if (storedStats) {
+          const pasredStats = JSON.parse(storedStats);
+          pasredStats.push({
+            fileName: file.name,
+            date: new Date(),
+            isProccessed: true,
+            data: partedData,
+          });
+          localStorage.setItem(
+            "aggregated_statistics",
+            JSON.stringify(pasredStats),
+          );
+        } else {
+          localStorage.setItem(
+            "aggregated_statistics",
+            JSON.stringify([
+              {
+                fileName: file.name,
+                date: new Date(),
+                isProccessed: true,
+                data: partedData,
+              },
+            ]),
+          );
         }
-        else{
-            localStorage.setItem("aggregated_statistics", JSON.stringify([{"fileName" : file.name, "date" : new Date(), "isProccessed" : true, 'data' : partedData}]));
-        }
-    })
-    .catch(() => {
-        useStore.getState().setAnalyticError('упс, что-то пошло не так')
-        useStore.getState().updateAnalyticLoading('loaded');
+      })
+      .catch(() => {
+        useStore.getState().setAnalyticError("упс, что-то пошло не так");
+        useStore.getState().updateAnalyticLoading("loaded");
         const storedStats = localStorage.getItem("aggregated_statistics");
-        if (storedStats)
-        {
-            const pasredStats = JSON.parse(storedStats);
-            pasredStats.push({"fileName" : file.name, "date" : new Date(), "isProccessed" : false, 'data' : null});
-            localStorage.setItem("aggregated_statistics", JSON.stringify(pasredStats));
+        if (storedStats) {
+          const pasredStats = JSON.parse(storedStats);
+          pasredStats.push({
+            fileName: file.name,
+            date: new Date(),
+            isProccessed: false,
+            data: null,
+          });
+          localStorage.setItem(
+            "aggregated_statistics",
+            JSON.stringify(pasredStats),
+          );
+        } else {
+          localStorage.setItem(
+            "aggregated_statistics",
+            JSON.stringify([
+              {
+                fileName: file.name,
+                date: new Date(),
+                isProccessed: false,
+                data: null,
+              },
+            ]),
+          );
         }
-        else{
-            localStorage.setItem("aggregated_statistics", JSON.stringify([{"fileName" : file.name, "date" : new Date(), "isProccessed" : false, 'data' : null}]));
-        }
-    });
+      });
   };
 
   const triggerFileInput = () => inputRef.current?.click();
@@ -88,8 +118,8 @@ export function UploadForm() {
   const handleRemove = () => {
     setFile(null);
     setError(null);
-    updateLoading('notLoaded');
-    updateCurrData(null)
+    updateLoading("notLoaded");
+    updateCurrData(null);
   };
 
   return (
@@ -107,41 +137,54 @@ export function UploadForm() {
         onChange={handleChange}
         style={{ display: "none" }}
       />
-    
-      {(!file && loadingStatus !== "isLoading") && (
+
+      {!file && loadingStatus !== "isLoading" && (
         <>
-          <button type="button" onClick={triggerFileInput} className={styles.upload_button}>
+          <button
+            type="button"
+            onClick={triggerFileInput}
+            className={styles.upload_button}
+          >
             Загрузить файл
           </button>
           <p className={styles.additional_info}>или перетащите сюда</p>
         </>
       )}
 
-      {(file && loadingStatus !== "isLoading") && (
+      {file && loadingStatus !== "isLoading" && (
         <>
-            <div className={styles.file_preview}>
-                <span className={`${error && styles.file_name_error} ${styles.file_name} ${loadingStatus === "loaded" && styles.file_name_aggregated}`}>{file.name}</span>
-                <button type="button" onClick={handleRemove} className={styles.remove_button}>×</button>
-            </div>
-            {loadingStatus === 'notLoaded'
-                ? !error && <p className={styles.additional_info}>файл загружен!</p>
-                : !error && <p className={styles.additional_info}>готово!</p>
-            }
+          <div className={styles.file_preview}>
+            <span
+              className={`${error && styles.file_name_error} ${styles.file_name} ${loadingStatus === "loaded" && styles.file_name_aggregated}`}
+            >
+              {file.name}
+            </span>
+            <button
+              type="button"
+              onClick={handleRemove}
+              className={styles.remove_button}
+            >
+              ×
+            </button>
+          </div>
+          {loadingStatus === "notLoaded"
+            ? !error && <p className={styles.additional_info}>файл загружен!</p>
+            : !error && <p className={styles.additional_info}>готово!</p>}
         </>
       )}
 
-      {loadingStatus === "isLoading" && (
-        <Loader info="идёт парсинг файлов"/>
-      )
-      }
+      {loadingStatus === "isLoading" && <Loader info="идёт парсинг файлов" />}
 
       {error && <p className={styles.error_message}>{error}</p>}
-      {
-        loadingStatus === "notLoaded" && !error &&
-        <button type="submit" disabled={!file || !!error} className={styles.submit_button}>
-            Отправить
+      {loadingStatus === "notLoaded" && !error && (
+        <button
+          type="submit"
+          disabled={!file || !!error}
+          className={styles.submit_button}
+        >
+          Отправить
         </button>
-      }
+      )}
     </form>
   );
 }

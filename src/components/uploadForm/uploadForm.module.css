@@ -2,7 +2,7 @@
   padding: 3em;
   border: 1px solid transparent;
   border-radius: 12px;
-  background-color: #EACDFF;
+  background-color: #eacdff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,18 +10,18 @@
   position: relative;
 }
 
-.loadedFile{
-    border-color: #201B10;
-    background-color: transparent;
+.loadedFile {
+  border-color: #201b10;
+  background-color: transparent;
 }
 
 .error {
-  border-color: #FF5F00;
+  border-color: #ff5f00;
   background-color: transparent;
 }
 
 .dragging {
-  background-color: #D4FAE6;
+  background-color: #d4fae6;
   border-color: transparent;
 }
 
@@ -34,10 +34,10 @@
   cursor: pointer;
 }
 
-.additional_info{
-    font-size: 1.5em;
-    margin: 0;
-    margin-top: 5px;
+.additional_info {
+  font-size: 1.5em;
+  margin: 0;
+  margin-top: 5px;
 }
 
 .file_preview {
@@ -47,21 +47,21 @@
   gap: 0.5rem;
 }
 
-.file_name{
-    padding: 0.3em 0.7em;
-    border-radius: 10px;
-    font-size: 1.6em;
-    background-color: #CB81FF;
-    color: #201B10;
+.file_name {
+  padding: 0.3em 0.7em;
+  border-radius: 10px;
+  font-size: 1.6em;
+  background-color: #cb81ff;
+  color: #201b10;
 }
 
-.file_name_aggregated{
-    background-color: #D4FAE6;
-    color: #201B10;
+.file_name_aggregated {
+  background-color: #d4fae6;
+  color: #201b10;
 }
 
 .file_name_error {
-  background-color: #FF5F00;
+  background-color: #ff5f00;
   color: white;
 }
 
@@ -76,25 +76,25 @@
 }
 
 .error_message {
-  color: #FF5F00;
+  color: #ff5f00;
   margin-top: 0.5rem;
   font-size: 1.6em;
 }
 
-.submit_button{
-    padding: 0.4em 0.6em;
-    border-radius: 15px;
-    font-size: 1.5em;
-    position: absolute;
-    background-color: #2AE881;
-    color:#201B10;
-    bottom: -2.5em;
-    border: none;
-    cursor: pointer;
+.submit_button {
+  padding: 0.4em 0.6em;
+  border-radius: 15px;
+  font-size: 1.5em;
+  position: absolute;
+  background-color: #2ae881;
+  color: #201b10;
+  bottom: -2.5em;
+  border: none;
+  cursor: pointer;
 }
 
-.submit_button:disabled{
-    background-color: #C0C0C0;
-    color: #787878;
-    cursor: default;
+.submit_button:disabled {
+  background-color: #c0c0c0;
+  color: #787878;
+  cursor: default;
 }
