@@ -1,5 +1,6 @@
 import type { LoadType } from "./loadTypes";
 import { type PageType } from "./pageType";
+import type { RecordType } from "./recordType";
 import type { StatisticType } from "./statisticType";
 
 export type StoreType = {
@@ -22,4 +23,9 @@ export type StoreType = {
 
   generativeError: string | null;
   setGenerativeError: (msg: string | null) => void;
+
+  history: RecordType[];
+  setHistory: (history: RecordType[]) => void;
+  deleteRecord: (id: number) => void;
+  clearHistory: () => void;
 };

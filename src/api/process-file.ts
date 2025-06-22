@@ -1,7 +1,7 @@
 import { useStore } from "../store/store";
 import { isStatisticType } from "../types/statisticType";
 
-export async function analizeFile(file: File) {
+export async function ProcessFile(file: File) {
   let isFirstDecoded = false;
   useStore.getState().updateAnalyticLoading("isLoading");
   const formData = new FormData();

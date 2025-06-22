@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import styles from "./uploadForm.module.css";
 import { useStore } from "../../store/store";
-import { analizeFile } from "../../api/analize-file";
+import { AnalyseFile } from "../../api/analyse-file";
 import { Loader } from "../Loader/Loader";
 
 export function UploadForm() {
@@ -52,65 +52,7 @@ export function UploadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file || error) return;
-    await analizeFile(file)
-      .then((partedData) => {
-        const storedStats = localStorage.getItem("aggregated_statistics");
-        if (storedStats) {
-          const pasredStats = JSON.parse(storedStats);
-          pasredStats.push({
-            fileName: file.name,
-            date: new Date(),
-            isProccessed: true,
-            data: partedData,
-          });
-          localStorage.setItem(
-            "aggregated_statistics",
-            JSON.stringify(pasredStats),
-          );
-        } else {
-          localStorage.setItem(
-            "aggregated_statistics",
-            JSON.stringify([
-              {
-                fileName: file.name,
-                date: new Date(),
-                isProccessed: true,
-                data: partedData,
-              },
-            ]),
-          );
-        }
-      })
-      .catch(() => {
-        useStore.getState().setAnalyticError("упс, что-то пошло не так");
-        useStore.getState().updateAnalyticLoading("loaded");
-        const storedStats = localStorage.getItem("aggregated_statistics");
-        if (storedStats) {
-          const pasredStats = JSON.parse(storedStats);
-          pasredStats.push({
-            fileName: file.name,
-            date: new Date(),
-            isProccessed: false,
-            data: null,
-          });
-          localStorage.setItem(
-            "aggregated_statistics",
-            JSON.stringify(pasredStats),
-          );
-        } else {
-          localStorage.setItem(
-            "aggregated_statistics",
-            JSON.stringify([
-              {
-                fileName: file.name,
-                date: new Date(),
-                isProccessed: false,
-                data: null,
-              },
-            ]),
-          );
-        }
-      });
+    await AnalyseFile(file);
   };
 
   const triggerFileInput = () => inputRef.current?.click();
