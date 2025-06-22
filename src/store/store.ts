@@ -28,7 +28,7 @@ export const useStore = create<StoreType>((set, get) => ({
   },
 
   deleteRecord: (id) => {
-    const newHistory = get().history.filter((rec : RecordType) => rec.id !== id);
+    const newHistory = get().history.filter((rec: RecordType) => rec.id !== id);
     localStorage.setItem("aggregated_statistics", JSON.stringify(newHistory));
     set({ history: newHistory });
   },
