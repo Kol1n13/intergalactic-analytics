@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useStore } from "../../store/store";
 import styles from "./HistoryPage.module.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import type { RecordType } from "../../types/recordType";
 import { Record } from "../../components/Record/Record";
 
@@ -32,9 +32,9 @@ export function HistoryPage() {
           })}
       </ul>
       <div className={styles.button_container}>
-        <Link to="/generate" className={styles.generate_more}>
+        <NavLink to="/generate" className={styles.generate_more}>
           Сгенерировать больше
-        </Link>
+        </NavLink>
         <button className={styles.clear_all} onClick={clearHistory}>
           Очистить всё
         </button>

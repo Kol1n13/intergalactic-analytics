@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useStore } from "../../store/store";
 import styles from "./Header.module.css";
 
@@ -10,31 +10,31 @@ export function Header() {
         <img src="/img/logo.svg" alt="Logo" className={styles.logo} />
         <ul className={styles.links}>
           <li>
-            <Link
+            <NavLink
               to="/"
               className={`${styles.link} ${currPage === "MainPage" && styles.underline_link}`}
             >
               <img className={styles.header_icon} src="/img/upload.svg" />
               <span>CSV Аналитик</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/generate"
               className={`${styles.link} ${currPage === "GeneratePage" && styles.underline_link}`}
             >
               <img className={styles.header_icon} src="/img/generate.svg" />
               <span>CSV Генератор</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/history"
               className={`${styles.link} ${currPage === "HistoryPage" && styles.underline_link}`}
             >
               <img className={styles.header_icon} src="/img/history.svg" />
               <span>История</span>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </header>
