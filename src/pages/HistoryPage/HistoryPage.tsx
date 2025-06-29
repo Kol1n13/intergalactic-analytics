@@ -12,7 +12,6 @@ export function HistoryPage() {
   const setHistory = useStore((state) => state.setHistory);
 
   const clearHistory = useStore((state) => state.clearHistory);
-
   useEffect(() => {
     updatePage("HistoryPage");
   }, [updatePage]);
@@ -25,6 +24,7 @@ export function HistoryPage() {
   }, [setHistory]);
   return (
     <>
+      <h1 data-testid='historypage-classifier' style={{display: "none"}}>История генерации</h1>
       <ul className={styles.records}>
         {aggregatedStat &&
           JSON.parse(aggregatedStat).map((record: RecordType) => {
@@ -32,10 +32,10 @@ export function HistoryPage() {
           })}
       </ul>
       <div className={styles.button_container}>
-        <NavLink to="/generate" className={styles.generate_more}>
+        <NavLink to="/generate"  data-testid="generateMoreBtn" className={styles.generate_more}>
           Сгенерировать больше
         </NavLink>
-        <button className={styles.clear_all} onClick={clearHistory}>
+        <button data-testid="clearHistoryBtn" className={styles.clear_all} onClick={clearHistory}>
           Очистить всё
         </button>
       </div>

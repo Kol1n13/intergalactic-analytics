@@ -4,11 +4,12 @@ import { ProcessFile } from "./process-file";
 export async function AnalyseFile(file: File) {
   await ProcessFile(file)
     .then((partedData) => {
+      useStore.getState().updateAnalyticLoading("loaded");
       const storedStats = localStorage.getItem("aggregated_statistics");
       const statsCounter = localStorage.getItem("stat_counter");
       if (storedStats && statsCounter) {
-        const pasredStats = JSON.parse(storedStats);
-        pasredStats.push({
+        const parsedStats = JSON.parse(storedStats);
+        parsedStats.push({
           fileName: file.name,
           date: new Date(),
           isProccessed: true,
@@ -17,7 +18,7 @@ export async function AnalyseFile(file: File) {
         });
         localStorage.setItem(
           "aggregated_statistics",
-          JSON.stringify(pasredStats),
+          JSON.stringify(parsedStats),
         );
         localStorage.setItem(
           "stat_counter",
@@ -45,8 +46,8 @@ export async function AnalyseFile(file: File) {
       const storedStats = localStorage.getItem("aggregated_statistics");
       const statsCounter = localStorage.getItem("stat_counter");
       if (storedStats && statsCounter) {
-        const pasredStats = JSON.parse(storedStats);
-        pasredStats.push({
+        const parsedStats = JSON.parse(storedStats);
+        parsedStats.push({
           fileName: file.name,
           date: new Date(),
           isProccessed: false,
@@ -55,7 +56,7 @@ export async function AnalyseFile(file: File) {
         });
         localStorage.setItem(
           "aggregated_statistics",
-          JSON.stringify(pasredStats),
+          JSON.stringify(parsedStats),
         );
         localStorage.setItem(
           "stat_counter",

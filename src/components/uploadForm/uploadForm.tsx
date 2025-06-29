@@ -10,14 +10,12 @@ export function UploadForm() {
 
   const file = useStore((state) => state.file);
   const setFile = useStore((state) => state.setFile);
+  const validateAndSetFile = useStore((state) => state.validateAndSetFile)
   const error = useStore((state) => state.analyticError);
   const setError = useStore((state) => state.setAnalyticError);
   const updateLoading = useStore((state) => state.updateAnalyticLoading);
   const updateCurrData = useStore((state) => state.updateCurrData);
   const loadingStatus = useStore((state) => state.analyticLoading);
-
-  const isCSV = (f: File) =>
-    f.type === "text/csv" || f.name.toLowerCase().endsWith(".csv");
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -39,19 +37,10 @@ export function UploadForm() {
     if (selectedFile) validateAndSetFile(selectedFile);
   };
 
-  const validateAndSetFile = (f: File) => {
-    if (isCSV(f)) {
-      setFile(f);
-      setError(null);
-    } else {
-      setFile(f);
-      setError("упс, не то...");
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file || error) return;
+    useStore.getState().updateAnalyticLoading("isLoading");
     await AnalyseFile(file);
   };
 
@@ -70,10 +59,12 @@ export function UploadForm() {
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
+      data-testid="uploadForm"
       className={`${styles.dropzone} ${isDragging ? styles.dragging : ""} ${error ? styles.error : ""} ${file ? styles.loadedFile : ""}`}
     >
       <input
         type="file"
+        data-testid="uploadInput"
         accept=".csv"
         ref={inputRef}
         onChange={handleChange}
@@ -103,6 +94,7 @@ export function UploadForm() {
             </span>
             <button
               type="button"
+              data-testid="resetter"
               onClick={handleRemove}
               className={styles.remove_button}
             >
@@ -110,17 +102,18 @@ export function UploadForm() {
             </button>
           </div>
           {loadingStatus === "notLoaded"
-            ? !error && <p className={styles.additional_info}>файл загружен!</p>
-            : !error && <p className={styles.additional_info}>готово!</p>}
+            ? !error && <p data-testid="uploadedFile" className={styles.additional_info}>файл загружен!</p>
+            : !error && <p data-testid="analysedFile" className={styles.additional_info}>готово!</p>}
         </>
       )}
 
       {loadingStatus === "isLoading" && <Loader info="идёт парсинг файлов" />}
 
-      {error && <p className={styles.error_message}>{error}</p>}
+      {error && <p data-testid="analyseError" className={styles.error_message}>{error}</p>}
       {loadingStatus === "notLoaded" && !error && (
         <button
           type="submit"
+          data-testid="submitBtn"
           disabled={!file || !!error}
           className={styles.submit_button}
         >

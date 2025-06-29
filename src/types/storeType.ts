@@ -8,6 +8,7 @@ export type StoreType = {
   updatePage: (newPage: PageType) => void;
   file: File | null;
   setFile: (file: File | null) => void;
+  validateAndSetFile: (file : File) => void;
 
   analyticError: string | null;
   setAnalyticError: (msg: string | null) => void;

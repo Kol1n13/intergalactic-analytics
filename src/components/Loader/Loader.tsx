@@ -6,7 +6,7 @@ export function Loader({ info }: { info: string }) {
       <div className={styles.loader_box}>
         <span className={styles.loader}></span>
       </div>
-      <p className={styles.additional_info}>{info}</p>
+      <p data-testid="loader" className={styles.additional_info}>{info}</p>
     </>
   );
 }

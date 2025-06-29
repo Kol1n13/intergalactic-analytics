@@ -12,12 +12,12 @@ export function MainPage() {
   }, [updatePage]);
   return (
     <>
-      <h1 className={styles.short_info}>
+      <h1 data-testid="mainpage-classifier" className={styles.short_info}>
         Загрузите <b>csv</b> и получите <b>полную информацию</b> о нём за
         сверхкороткое время
       </h1>
       <UploadForm />
-      <Statistics />
+      <Statistics isModal={false} currData={useStore((state) => state.currData)}/>
     </>
   );
 }

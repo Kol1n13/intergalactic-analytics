@@ -9,8 +9,9 @@ export function Record({ record }: { record: RecordType }) {
   const deleteRecord = useStore((state) => state.deleteRecord);
 
   return (
-    <li className={styles.record}>
+    <li data-testid="record" className={styles.record}>
       <div
+        data-testid="record-frame"
         className={`${styles.record__info} ${record.isProccessed && styles.record_pointer}`}
         onClick={
           record.isProccessed
@@ -42,6 +43,7 @@ export function Record({ record }: { record: RecordType }) {
       </div>
       <button
         className={styles.trash}
+        data-testid="deleteBtn"
         onClick={() => {
           deleteRecord(record.id);
         }}

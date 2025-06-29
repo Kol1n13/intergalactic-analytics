@@ -33,12 +33,13 @@ export function GeneratePage() {
   }, [updatePage]);
   return (
     <div className={styles.generate_container}>
-      <h1 className={styles.short_info}>
+      <h1 data-testid='generatepage-classifier' className={styles.short_info}>
         Сгенерируйте готовый csv-файл нажатием одной кнопки
       </h1>
       {loadingStatus === "notLoaded" && (
         <button
           type="button"
+          data-testid="startGenerationBtn"
           onClick={generateFile}
           className={styles.generate_button}
         >
@@ -52,12 +53,13 @@ export function GeneratePage() {
         <>
           <div className={styles.result_box}>
             {!error ? (
-              <span className={styles.success}>Done!</span>
+              <span data-testid="generateSuccess" className={styles.success}>Done!</span>
             ) : (
-              <span className={styles.error}>Ошибка</span>
+              <span data-testid="generateFailure" className={styles.error}>Ошибка</span>
             )}
             <button
               type="button"
+              data-testid="backToInitialBtn"
               onClick={handleRemove}
               className={styles.remove_button}
             >

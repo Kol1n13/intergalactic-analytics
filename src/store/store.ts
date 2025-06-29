@@ -10,6 +10,15 @@ export const useStore = create<StoreType>((set, get) => ({
   updatePage: (newPage: PageType) => set(() => ({ page: newPage })),
   file: null,
   setFile: (file: File | null) => set({ file }),
+  validateAndSetFile: (file: File) => {
+    if (file.type === "text/csv" || file.name.toLowerCase().endsWith(".csv")) {
+      set({file})
+      set({analyticError: null})
+    } else {
+      set({file})
+      set({analyticError: "упс, не то..."})
+    }
+  },
   analyticError: null,
   setAnalyticError: (msg: string | null) => set({ analyticError: msg }),
   currData: null,

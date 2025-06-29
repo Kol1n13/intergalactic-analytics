@@ -3,7 +3,6 @@ import { isStatisticType } from "../types/statisticType";
 
 export async function ProcessFile(file: File) {
   let isFirstDecoded = false;
-  useStore.getState().updateAnalyticLoading("isLoading");
   const formData = new FormData();
   formData.append("file", file);
   const response = await fetch("http://localhost:3000/aggregate?rows=20000", {
@@ -28,12 +27,10 @@ export async function ProcessFile(file: File) {
         dataPart = JSON.parse(decodeData[0]);
       }
       if (!isStatisticType(dataPart)) {
-        console.log(dataPart);
         continue;
       }
       useStore.getState().updateCurrData(dataPart);
     }
-    useStore.getState().updateAnalyticLoading("loaded");
     return dataPart;
   }
   throw Error("не валидные данные");

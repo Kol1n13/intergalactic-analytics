@@ -11,6 +11,7 @@ export function Header() {
         <ul className={styles.links}>
           <li>
             <NavLink
+              data-testid="toMainPageBtn"
               to="/"
               className={`${styles.link} ${currPage === "MainPage" && styles.underline_link}`}
             >
@@ -20,6 +21,7 @@ export function Header() {
           </li>
           <li>
             <NavLink
+              data-testid="toGeneratePageBtn"
               to="/generate"
               className={`${styles.link} ${currPage === "GeneratePage" && styles.underline_link}`}
             >
@@ -30,6 +32,7 @@ export function Header() {
           <li>
             <NavLink
               to="/history"
+              data-testid="toHistoryPageBtn"
               className={`${styles.link} ${currPage === "HistoryPage" && styles.underline_link}`}
             >
               <img className={styles.header_icon} src="/img/history.svg" />
